@@ -8,8 +8,5 @@ export interface SteamOwnedGame {
 }
 
 export interface SteamApiPort {
-  getOwnedGames(
-    apiKey: string,
-    steamId: string,
-  ): Promise<SteamOwnedGame[]>;
+  getOwnedGames(apiKey: string, steamId: string): Promise<SteamOwnedGame[]>;
 }

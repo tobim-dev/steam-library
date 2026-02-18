@@ -29,7 +29,7 @@ export class TypeOrmDiaryEntryRepository implements DiaryEntryRepository {
     qb.orderBy(`entry.${sortField}`, order);
 
     const entities = await qb.getMany();
-    return entities.map(DiaryEntryMapper.toDomain);
+    return entities.map((e) => DiaryEntryMapper.toDomain(e));
   }
 
   async findByGameId(gameId: string): Promise<DiaryEntry[]> {
@@ -37,7 +37,7 @@ export class TypeOrmDiaryEntryRepository implements DiaryEntryRepository {
       where: { gameId },
       order: { playDate: 'DESC' },
     });
-    return entities.map(DiaryEntryMapper.toDomain);
+    return entities.map((e) => DiaryEntryMapper.toDomain(e));
   }
 
   async findById(id: string): Promise<DiaryEntry | null> {

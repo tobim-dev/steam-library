@@ -3,7 +3,7 @@ import { GameRepository } from '../../../domain/repositories/game.repository';
 import { SettingsRepository } from '../../../domain/repositories/settings.repository';
 import { Settings } from '../../../domain/entities/settings.entity';
 import { SteamApiPort } from '../../ports/steam-api.port';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 export interface SyncResult {
   added: number;
@@ -64,7 +64,7 @@ export class SyncSteamLibraryUseCase {
         updated++;
       } else {
         const newGame = new Game(
-          uuidv4(),
+          randomUUID(),
           steamGame.appid,
           steamGame.name,
           headerImageUrl,

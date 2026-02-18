@@ -1,16 +1,9 @@
-import {
-  Controller,
-  Post,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Controller, Post, HttpException, HttpStatus } from '@nestjs/common';
 import { SyncSteamLibraryUseCase } from '../../application/use-cases/games/sync-steam-library.use-case';
 
 @Controller('api/sync')
 export class SyncController {
-  constructor(
-    private readonly syncSteamLibrary: SyncSteamLibraryUseCase,
-  ) {}
+  constructor(private readonly syncSteamLibrary: SyncSteamLibraryUseCase) {}
 
   @Post('steam')
   async sync() {

@@ -17,7 +17,8 @@ export class SettingsController {
       steamApiKey: settings.steamApiKey
         ? '••••••••' + settings.steamApiKey.slice(-4)
         : null,
-      steamApiKeySet: settings.steamApiKey !== null && settings.steamApiKey.length > 0,
+      steamApiKeySet:
+        settings.steamApiKey !== null && settings.steamApiKey.length > 0,
       steamId: settings.steamId,
       lastSyncAt: settings.lastSyncAt?.toISOString() ?? null,
       lastSyncGameCount: settings.lastSyncGameCount,
@@ -32,7 +33,8 @@ export class SettingsController {
       steamApiKey: settings.steamApiKey
         ? '••••••••' + settings.steamApiKey.slice(-4)
         : null,
-      steamApiKeySet: settings.steamApiKey !== null && settings.steamApiKey.length > 0,
+      steamApiKeySet:
+        settings.steamApiKey !== null && settings.steamApiKey.length > 0,
       steamId: settings.steamId,
       lastSyncAt: settings.lastSyncAt?.toISOString() ?? null,
       lastSyncGameCount: settings.lastSyncGameCount,

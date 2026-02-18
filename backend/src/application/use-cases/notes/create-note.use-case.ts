@@ -1,7 +1,7 @@
 import { Note } from '../../../domain/entities/note.entity';
 import { NoteRepository } from '../../../domain/repositories/note.repository';
 import { GameRepository } from '../../../domain/repositories/game.repository';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 export class CreateNoteUseCase {
   constructor(
@@ -16,7 +16,7 @@ export class CreateNoteUseCase {
     }
 
     const now = new Date();
-    const note = new Note(uuidv4(), gameId, content, now, now);
+    const note = new Note(randomUUID(), gameId, content, now, now);
     return this.noteRepository.save(note);
   }
 }

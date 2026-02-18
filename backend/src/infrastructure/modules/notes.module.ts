@@ -21,8 +21,10 @@ import { GamesModule } from './games.module';
     },
     {
       provide: CreateNoteUseCase,
-      useFactory: (noteRepo: TypeOrmNoteRepository, gameRepo: TypeOrmGameRepository) =>
-        new CreateNoteUseCase(noteRepo, gameRepo),
+      useFactory: (
+        noteRepo: TypeOrmNoteRepository,
+        gameRepo: TypeOrmGameRepository,
+      ) => new CreateNoteUseCase(noteRepo, gameRepo),
       inject: [NOTE_REPOSITORY, GAME_REPOSITORY],
     },
     {

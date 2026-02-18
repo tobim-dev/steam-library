@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDiary } from '../../hooks/useDiary';
 import { useGames } from '../../hooks/useGames';
 import { DiaryEntryForm } from '../../components/DiaryEntryForm/DiaryEntryForm';

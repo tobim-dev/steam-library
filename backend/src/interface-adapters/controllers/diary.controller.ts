@@ -39,13 +39,13 @@ export class DiaryController {
       sort,
       order,
     });
-    return entries.map(DiaryEntryPresenter.toResponse);
+    return entries.map((e) => DiaryEntryPresenter.toResponse(e));
   }
 
   @Get('games/:gameId/diary')
   async findByGame(@Param('gameId') gameId: string) {
     const entries = await this.getDiaryEntriesForGame.execute(gameId);
-    return entries.map(DiaryEntryPresenter.toResponse);
+    return entries.map((e) => DiaryEntryPresenter.toResponse(e));
   }
 
   @Post('diary')
@@ -68,10 +68,7 @@ export class DiaryController {
   }
 
   @Put('diary/:id')
-  async update(
-    @Param('id') id: string,
-    @Body() dto: UpdateDiaryEntryDto,
-  ) {
+  async update(@Param('id') id: string, @Body() dto: UpdateDiaryEntryDto) {
     try {
       const entry = await this.updateDiaryEntry.execute(id, {
         title: dto.title,

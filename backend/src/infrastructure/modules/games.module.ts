@@ -17,14 +17,12 @@ import { GAME_REPOSITORY } from '../../shared/constants';
     },
     {
       provide: GetAllGamesUseCase,
-      useFactory: (repo: TypeOrmGameRepository) =>
-        new GetAllGamesUseCase(repo),
+      useFactory: (repo: TypeOrmGameRepository) => new GetAllGamesUseCase(repo),
       inject: [GAME_REPOSITORY],
     },
     {
       provide: GetGameByIdUseCase,
-      useFactory: (repo: TypeOrmGameRepository) =>
-        new GetGameByIdUseCase(repo),
+      useFactory: (repo: TypeOrmGameRepository) => new GetGameByIdUseCase(repo),
       inject: [GAME_REPOSITORY],
     },
   ],

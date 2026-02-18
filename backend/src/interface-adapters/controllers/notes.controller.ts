@@ -28,14 +28,11 @@ export class NotesController {
   @Get('games/:gameId/notes')
   async findByGame(@Param('gameId') gameId: string) {
     const notes = await this.getNotesForGame.execute(gameId);
-    return notes.map(NotePresenter.toResponse);
+    return notes.map((n) => NotePresenter.toResponse(n));
   }
 
   @Post('games/:gameId/notes')
-  async create(
-    @Param('gameId') gameId: string,
-    @Body() dto: CreateNoteDto,
-  ) {
+  async create(@Param('gameId') gameId: string, @Body() dto: CreateNoteDto) {
     try {
       const note = await this.createNote.execute(gameId, dto.content);
       return NotePresenter.toResponse(note);

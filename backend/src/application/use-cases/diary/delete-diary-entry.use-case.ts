@@ -1,9 +1,7 @@
 import { DiaryEntryRepository } from '../../../domain/repositories/diary-entry.repository';
 
 export class DeleteDiaryEntryUseCase {
-  constructor(
-    private readonly diaryEntryRepository: DiaryEntryRepository,
-  ) {}
+  constructor(private readonly diaryEntryRepository: DiaryEntryRepository) {}
 
   async execute(id: string): Promise<void> {
     const existing = await this.diaryEntryRepository.findById(id);

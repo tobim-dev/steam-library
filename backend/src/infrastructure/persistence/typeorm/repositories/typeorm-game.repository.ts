@@ -31,7 +31,7 @@ export class TypeOrmGameRepository implements GameRepository {
     qb.orderBy(`game.${sortField}`, order);
 
     const entities = await qb.getMany();
-    return entities.map(GameMapper.toDomain);
+    return entities.map((e) => GameMapper.toDomain(e));
   }
 
   async findById(id: string): Promise<Game | null> {
@@ -51,9 +51,9 @@ export class TypeOrmGameRepository implements GameRepository {
   }
 
   async saveMany(games: Game[]): Promise<Game[]> {
-    const ormEntities = games.map(GameMapper.toOrm);
+    const ormEntities = games.map((g) => GameMapper.toOrm(g));
     const saved = await this.ormRepo.save(ormEntities);
-    return saved.map(GameMapper.toDomain);
+    return saved.map((s) => GameMapper.toDomain(s));
   }
 
   async count(): Promise<number> {
@@ -61,7 +61,12 @@ export class TypeOrmGameRepository implements GameRepository {
   }
 
   private getSortField(sort?: string): string {
-    const allowed = ['name', 'playtimeForeverMinutes', 'lastSyncedAt', 'createdAt'];
+    const allowed = [
+      'name',
+      'playtimeForeverMinutes',
+      'lastSyncedAt',
+      'createdAt',
+    ];
     if (sort && allowed.includes(sort)) return sort;
     return 'name';
   }

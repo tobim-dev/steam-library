@@ -1,7 +1,7 @@
 import { DiaryEntry } from '../../../domain/entities/diary-entry.entity';
 import { DiaryEntryRepository } from '../../../domain/repositories/diary-entry.repository';
 import { GameRepository } from '../../../domain/repositories/game.repository';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 export interface CreateDiaryEntryInput {
   gameId?: string | null;
@@ -34,7 +34,7 @@ export class CreateDiaryEntryUseCase {
 
     const now = new Date();
     const entry = new DiaryEntry(
-      uuidv4(),
+      randomUUID(),
       input.gameId ?? null,
       input.title,
       input.content,

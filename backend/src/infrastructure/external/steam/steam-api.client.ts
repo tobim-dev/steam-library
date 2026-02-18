@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { SteamApiPort, SteamOwnedGame } from '../../../application/ports/steam-api.port';
+import {
+  SteamApiPort,
+  SteamOwnedGame,
+} from '../../../application/ports/steam-api.port';
 import { SteamGetOwnedGamesResponse } from './steam-api.types';
 
 @Injectable()
@@ -20,7 +23,7 @@ export class SteamApiClient implements SteamApiPort {
       );
     }
 
-    const data: SteamGetOwnedGamesResponse = await response.json();
+    const data = (await response.json()) as SteamGetOwnedGamesResponse;
 
     if (!data.response || !data.response.games) {
       return [];

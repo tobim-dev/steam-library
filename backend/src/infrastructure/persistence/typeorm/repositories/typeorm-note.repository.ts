@@ -18,7 +18,7 @@ export class TypeOrmNoteRepository implements NoteRepository {
       where: { gameId },
       order: { createdAt: 'DESC' },
     });
-    return entities.map(NoteMapper.toDomain);
+    return entities.map((e) => NoteMapper.toDomain(e));
   }
 
   async findById(id: string): Promise<Note | null> {

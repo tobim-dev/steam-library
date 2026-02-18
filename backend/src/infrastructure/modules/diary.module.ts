@@ -9,7 +9,10 @@ import { DeleteDiaryEntryUseCase } from '../../application/use-cases/diary/delet
 import { GetDiaryEntriesUseCase } from '../../application/use-cases/diary/get-diary-entries.use-case';
 import { GetDiaryEntriesForGameUseCase } from '../../application/use-cases/diary/get-diary-entries-for-game.use-case';
 import { DiaryController } from '../../interface-adapters/controllers/diary.controller';
-import { DIARY_ENTRY_REPOSITORY, GAME_REPOSITORY } from '../../shared/constants';
+import {
+  DIARY_ENTRY_REPOSITORY,
+  GAME_REPOSITORY,
+} from '../../shared/constants';
 import { GamesModule } from './games.module';
 
 @Module({

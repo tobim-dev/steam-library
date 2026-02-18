@@ -7,9 +7,10 @@ export class DiaryEntryPresenter {
       gameId: entry.gameId,
       title: entry.title,
       content: entry.content,
-      playDate: entry.playDate instanceof Date
-        ? entry.playDate.toISOString()
-        : entry.playDate,
+      playDate:
+        entry.playDate instanceof Date
+          ? entry.playDate.toISOString()
+          : entry.playDate,
       hoursPlayed: entry.hoursPlayed,
       rating: entry.rating,
       createdAt: entry.createdAt.toISOString(),

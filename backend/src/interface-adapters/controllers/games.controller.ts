@@ -23,7 +23,7 @@ export class GamesController {
     @Query('order') order?: 'asc' | 'desc',
   ) {
     const games = await this.getAllGames.execute({ search, sort, order });
-    return games.map(GamePresenter.toResponse);
+    return games.map((g) => GamePresenter.toResponse(g));
   }
 
   @Get(':id')

@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import styles from './Sidebar.module.css';
 
 interface SidebarProps {
@@ -10,10 +10,14 @@ interface SidebarProps {
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation();
 
+  const handleClose = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
   // Sidebar automatisch schliessen bei Routenwechsel (mobile)
   useEffect(() => {
-    onClose();
-  }, [location.pathname]);
+    handleClose();
+  }, [location.pathname, handleClose]);
 
   return (
     <>

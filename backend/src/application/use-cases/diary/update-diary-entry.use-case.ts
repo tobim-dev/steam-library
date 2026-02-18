@@ -10,14 +10,9 @@ export interface UpdateDiaryEntryInput {
 }
 
 export class UpdateDiaryEntryUseCase {
-  constructor(
-    private readonly diaryEntryRepository: DiaryEntryRepository,
-  ) {}
+  constructor(private readonly diaryEntryRepository: DiaryEntryRepository) {}
 
-  async execute(
-    id: string,
-    input: UpdateDiaryEntryInput,
-  ): Promise<DiaryEntry> {
+  async execute(id: string, input: UpdateDiaryEntryInput): Promise<DiaryEntry> {
     const existing = await this.diaryEntryRepository.findById(id);
     if (!existing) {
       throw new Error(`Diary entry with id ${id} not found`);
@@ -35,7 +30,9 @@ export class UpdateDiaryEntryUseCase {
       input.title ?? existing.title,
       input.content ?? existing.content,
       input.playDate ?? existing.playDate,
-      input.hoursPlayed !== undefined ? input.hoursPlayed : existing.hoursPlayed,
+      input.hoursPlayed !== undefined
+        ? input.hoursPlayed
+        : existing.hoursPlayed,
       input.rating !== undefined ? input.rating : existing.rating,
       existing.createdAt,
       new Date(),

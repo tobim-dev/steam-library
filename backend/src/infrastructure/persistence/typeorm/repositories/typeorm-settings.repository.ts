@@ -5,7 +5,6 @@ import { SettingsRepository } from '../../../../domain/repositories/settings.rep
 import { Settings } from '../../../../domain/entities/settings.entity';
 import { SettingsOrmEntity } from '../entities/settings.orm-entity';
 import { SettingsMapper } from '../mappers/settings.mapper';
-import { v4 as uuidv4 } from 'uuid';
 
 const DEFAULT_SETTINGS_ID = 'default-settings';
 

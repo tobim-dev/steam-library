@@ -14,7 +14,9 @@ export class UpdateSettingsUseCase {
 
     const updated = new Settings(
       existing.id,
-      input.steamApiKey !== undefined ? input.steamApiKey : existing.steamApiKey,
+      input.steamApiKey !== undefined
+        ? input.steamApiKey
+        : existing.steamApiKey,
       input.steamId !== undefined ? input.steamId : existing.steamId,
       existing.lastSyncAt,
       existing.lastSyncGameCount,
