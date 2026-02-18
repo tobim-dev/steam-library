@@ -44,11 +44,11 @@ RUN apk add --no-cache nginx supervisor
 RUN mkdir -p /app/data /run/nginx
 
 # Copy backend dist and production dependencies
-WORKDIR /app/backend
-COPY --from=backend-build /app/backend/dist ./dist
-COPY --from=backend-build /app/node_modules ../node_modules
-COPY --from=backend-build /app/backend/node_modules ./node_modules
-COPY --from=backend-build /app/backend/package.json ./
+# npm workspaces hoists all deps into /app/node_modules (no backend/node_modules)
+WORKDIR /app
+COPY --from=backend-build /app/node_modules ./node_modules
+COPY --from=backend-build /app/backend/dist ./backend/dist
+COPY --from=backend-build /app/backend/package.json ./backend/
 
 # Copy frontend static files to nginx html directory
 COPY --from=frontend-build /app/frontend/dist /usr/share/nginx/html
