@@ -2,21 +2,35 @@
 # Stage 1: Build Frontend
 # =============================================================================
 FROM node:22-alpine AS frontend-build
-WORKDIR /app/frontend
-COPY frontend/package*.json ./
-RUN npm ci
-COPY frontend/ ./
-RUN npm run build
+WORKDIR /app
+
+# Copy root workspace config + frontend package.json for dependency install
+COPY package.json package-lock.json ./
+COPY frontend/package.json ./frontend/
+# Stub backend so npm workspaces resolves without error
+RUN mkdir -p backend && echo '{"name":"backend","version":"0.0.1"}' > backend/package.json
+RUN npm ci --workspace=frontend
+
+# Copy frontend source and build
+COPY frontend/ ./frontend/
+RUN npm run build --workspace=frontend
 
 # =============================================================================
 # Stage 2: Build Backend
 # =============================================================================
 FROM node:22-alpine AS backend-build
-WORKDIR /app/backend
-COPY backend/package*.json ./
-RUN npm ci
-COPY backend/ ./
-RUN npm run build
+WORKDIR /app
+
+# Copy root workspace config + backend package.json for dependency install
+COPY package.json package-lock.json ./
+COPY backend/package.json ./backend/
+# Stub frontend so npm workspaces resolves without error
+RUN mkdir -p frontend && echo '{"name":"frontend","version":"0.0.0"}' > frontend/package.json
+RUN npm ci --workspace=backend
+
+# Copy backend source and build
+COPY backend/ ./backend/
+RUN npm run build --workspace=backend
 
 # =============================================================================
 # Stage 3: Production Runtime
@@ -32,6 +46,7 @@ RUN mkdir -p /app/data /run/nginx
 # Copy backend dist and production dependencies
 WORKDIR /app/backend
 COPY --from=backend-build /app/backend/dist ./dist
+COPY --from=backend-build /app/node_modules ../node_modules
 COPY --from=backend-build /app/backend/node_modules ./node_modules
 COPY --from=backend-build /app/backend/package.json ./
 
