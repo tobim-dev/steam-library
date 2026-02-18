@@ -1,0 +1,136 @@
+.page {
+  max-width: 700px;
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: var(--space-xl);
+}
+
+.card {
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-xl);
+  border: 1px solid var(--border-color);
+  margin-bottom: var(--space-lg);
+}
+
+.cardTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: var(--space-md);
+}
+
+.cardDescription {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+  line-height: 1.6;
+}
+
+.field {
+  margin-bottom: var(--space-lg);
+}
+
+.label {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.input {
+  width: 100%;
+  padding: 12px var(--space-md);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+  font-size: var(--font-size-md);
+  transition: border-color var(--transition-fast);
+}
+
+.input:focus {
+  border-color: var(--accent-blue);
+  outline: none;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.btnSave {
+  background-color: var(--accent-blue);
+  color: var(--bg-tertiary);
+}
+
+.btnSave:hover {
+  background-color: var(--accent-blue-dark);
+}
+
+.btnSave:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.syncInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.syncRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+}
+
+.syncLabel {
+  color: var(--text-secondary);
+}
+
+.syncValue {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.successMsg {
+  padding: var(--space-sm) var(--space-md);
+  background-color: rgba(164, 208, 7, 0.15);
+  color: var(--accent-green-bright);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-md);
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.configured {
+  background-color: rgba(164, 208, 7, 0.15);
+  color: var(--accent-green-bright);
+}
+
+.notConfigured {
+  background-color: rgba(196, 64, 64, 0.15);
+  color: var(--accent-red);
+}

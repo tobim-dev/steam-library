@@ -1,0 +1,58 @@
+:root {
+  /* Backgrounds - Steam-like dark palette */
+  --bg-primary: #1b2838;
+  --bg-secondary: #2a475e;
+  --bg-tertiary: #171a21;
+  --bg-card: #1e2a3a;
+  --bg-card-hover: #2a475e;
+  --bg-input: #1a2332;
+  --bg-modal: #1b2838ee;
+
+  /* Text */
+  --text-primary: #c7d5e0;
+  --text-secondary: #8f98a0;
+  --text-bright: #ffffff;
+  --text-muted: #556b7d;
+
+  /* Accents */
+  --accent-blue: #66c0f4;
+  --accent-blue-dark: #4a90b8;
+  --accent-green: #4c6b22;
+  --accent-green-bright: #a4d007;
+  --accent-red: #c44040;
+  --accent-orange: #cf6a32;
+  --accent-gold: #ffc82c;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Borders */
+  --border-color: #2a475e;
+  --border-radius: 4px;
+  --border-radius-lg: 8px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+
+  /* Sidebar */
+  --sidebar-width: 240px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+}

@@ -1,0 +1,54 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--accent-green) 0%, #5a8428 100%);
+  color: var(--accent-green-bright);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5a8428 0%, #6b9a30 100%);
+  color: var(--text-bright);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spinning {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.result {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  margin-left: var(--space-md);
+}
+
+.success {
+  background-color: rgba(164, 208, 7, 0.15);
+  color: var(--accent-green-bright);
+}
+
+.error {
+  background-color: rgba(196, 64, 64, 0.15);
+  color: var(--accent-red);
+}

@@ -1,0 +1,108 @@
+.editor {
+  margin-bottom: var(--space-md);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: var(--space-md);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+  font-size: var(--font-size-md);
+  resize: vertical;
+  line-height: 1.5;
+  transition: border-color var(--transition-fast);
+}
+
+.textarea:focus {
+  border-color: var(--accent-blue);
+  outline: none;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.btnSave {
+  background-color: var(--accent-blue);
+  color: var(--bg-tertiary);
+}
+
+.btnSave:hover {
+  background-color: var(--accent-blue-dark);
+}
+
+.btnCancel {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.btnCancel:hover {
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+.noteItem {
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius);
+  padding: var(--space-md);
+  margin-bottom: var(--space-sm);
+  border: 1px solid var(--border-color);
+}
+
+.noteContent {
+  white-space: pre-wrap;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+}
+
+.noteMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.noteDate {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.noteActions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  padding: 4px 8px;
+  border-radius: var(--border-radius);
+  transition: all var(--transition-fast);
+}
+
+.actionBtn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+
+.deleteBtn:hover {
+  color: var(--accent-red);
+}

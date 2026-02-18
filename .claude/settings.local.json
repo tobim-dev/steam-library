@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:wiki.teamfortress.com)",
+      "Bash(npm install:*)",
+      "Bash(npx nest build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(git init:*)",
+      "Bash(git -C /Users/tobias/Projects/gaming_library status -s)",
+      "Bash(git add:*)"
+    ]
+  }
+}

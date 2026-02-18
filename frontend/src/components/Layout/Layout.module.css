@@ -1,0 +1,51 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: var(--space-xl);
+  min-height: 100vh;
+}
+
+/* Hamburger-Button: auf Desktop versteckt */
+.menuButton {
+  display: none;
+}
+
+.menuIcon {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+  .main {
+    margin-left: 0;
+    padding: var(--space-md);
+    /* Platz fuer den fixierten Hamburger-Header */
+    padding-top: calc(56px + var(--space-md));
+  }
+
+  .menuButton {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    z-index: 90;
+    background-color: var(--bg-tertiary);
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 var(--space-md);
+    cursor: pointer;
+  }
+
+  .menuButton:active {
+    background-color: var(--bg-card);
+  }
+}

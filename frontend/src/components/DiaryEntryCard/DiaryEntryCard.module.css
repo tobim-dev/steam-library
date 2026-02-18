@@ -1,0 +1,102 @@
+.card {
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-lg);
+  border: 1px solid var(--border-color);
+  margin-bottom: var(--space-md);
+  transition: border-color var(--transition-fast);
+}
+
+.card:hover {
+  border-color: var(--accent-blue);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-md);
+}
+
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+.date {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.content {
+  color: var(--text-primary);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  margin-bottom: var(--space-md);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.stars {
+  color: var(--accent-gold);
+  font-size: var(--font-size-md);
+  letter-spacing: 2px;
+}
+
+.gameBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 4px 12px;
+  background-color: var(--bg-secondary);
+  border-radius: 12px;
+  font-size: var(--font-size-xs);
+  color: var(--accent-blue);
+  cursor: pointer;
+}
+
+.gameBadge:hover {
+  background-color: var(--accent-blue);
+  color: var(--bg-tertiary);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-left: auto;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  padding: 4px 8px;
+  border-radius: var(--border-radius);
+  transition: all var(--transition-fast);
+}
+
+.actionBtn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+
+.deleteBtn:hover {
+  color: var(--accent-red);
+}
