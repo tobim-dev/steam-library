@@ -1,92 +1,92 @@
 # Steam Gaming Library
 
-Eine persönliche Web-Anwendung zur Verwaltung deiner Steam-Spielesammlung mit Tagebuch, Notizen und Multi-User-Support.
+A personal web application for managing your Steam game collection with a gaming diary, notes, and multi-user support.
 
 ## Features
 
-### Spielebibliothek
-- Automatischer Import aller Spiele aus deiner Steam-Bibliothek via Steam Web API
-- Detailansicht pro Spiel mit Headerbildern, Genre-Tags und Spielzeit
-- Such- und Sortierfunktionen (Name, Spielzeit, Genre)
+### Game Library
+- Automatic import of all games from your Steam library via the Steam Web API
+- Detail view per game with header images, genre tags, and playtime
+- Search and sorting (name, playtime, genre)
 
-### Spieletagebuch
-- Gaming-Sessions als Tagebucheinträge festhalten
-- Pro Eintrag: Titel, Inhalt, Spieldatum, Stunden und Bewertung (1-5 Sterne)
-- Einträge filtern nach Spiel oder Zeitraum
+### Gaming Diary
+- Log your gaming sessions as diary entries
+- Per entry: title, content, play date, hours played, and rating (1-5 stars)
+- Filter entries by game or time period
 
-### Notizen
-- Freie Notizen pro Spiel anlegen (Tipps, Guides, Gedanken)
-- Markdown-artige Textfelder mit Erstellungs- und Änderungsdatum
+### Notes
+- Create free-form notes per game (tips, guides, thoughts)
+- Text fields with creation and modification timestamps
 
-### Multi-User & Authentifizierung
-- JWT-basierte Authentifizierung mit Passport.js (Local + JWT Strategy)
-- Rollenbasierte Zugriffskontrolle (Admin / User)
-- Jeder Nutzer hat seine eigene, isolierte Spielesammlung
-- Standard-Admin wird beim ersten Start automatisch angelegt (`admin` / `admin`)
-- Pflicht zur Passwortänderung beim ersten Login
+### Multi-User & Authentication
+- JWT-based authentication with Passport.js (Local + JWT Strategy)
+- Role-based access control (Admin / User)
+- Each user has their own isolated game collection
+- Default admin account is automatically created on first startup (`admin` / `admin`)
+- Mandatory password change on first login
 
-### Admin-Bereich
-- Nutzerverwaltung: Anlegen, Aktivieren/Deaktivieren, Rollenänderung, Löschen
-- Steam-Sync für alle Nutzer gleichzeitig auslösen
-- Globalen Steam API Key verwalten
+### Admin Panel
+- User management: create, activate/deactivate, change roles, delete
+- Trigger Steam sync for all users at once
+- Manage the global Steam API key
 
-### Benutzerprofil
-- Eigene Steam ID hinterlegen (wird für den Bibliotheks-Sync benötigt)
-- Anzeigename ändern
-- Passwort ändern
+### User Profile
+- Set your own Steam ID (required for library sync)
+- Change display name
+- Change password
 
-### Steam-Sync
-- Nutzer können ihren eigenen Sync triggern (sofern Steam ID hinterlegt)
-- Admin kann Sync für alle Nutzer gleichzeitig starten
-- Globaler Steam API Key (vom Admin verwaltet)
+### Steam Sync
+- Users can trigger their own sync (if Steam ID is configured)
+- Admin can trigger sync for all users at once
+- Global Steam API key (managed by admin)
 
-## Tech-Stack
+## Tech Stack
 
-| Komponente | Technologie |
+| Component | Technology |
 |---|---|
 | **Frontend** | React 19, TypeScript, Vite, React Router, CSS Modules |
 | **Backend** | NestJS 11, TypeScript, Passport.js, JWT |
-| **Datenbank** | SQLite (better-sqlite3) via TypeORM |
-| **Architektur** | Clean Architecture (Domain → Application → Interface Adapters → Infrastructure) |
+| **Database** | SQLite (better-sqlite3) via TypeORM |
+| **Architecture** | Clean Architecture (Domain → Application → Interface Adapters → Infrastructure) |
 | **Auth** | Passport.js (Local Strategy + JWT Strategy), bcrypt |
 | **CI/CD** | GitHub Actions (Lint, Test, Build, Docker Push) |
 | **Deployment** | Docker (Multi-Stage Build), nginx + supervisord |
 
-## Projektstruktur
+## Project Structure
 
 ```
 gaming-library/
 ├── backend/                    # NestJS Backend
 │   ├── src/
-│   │   ├── domain/             # Entities & Repository-Interfaces
-│   │   ├── application/        # Use-Cases & Ports
-│   │   ├── interface-adapters/ # Controller, DTOs, Presenter
-│   │   ├── infrastructure/     # TypeORM, Passport, Module, Seeding
-│   │   └── shared/             # Gemeinsame Typen & Konstanten
-│   └── test/                   # E2E-Tests
+│   │   ├── domain/             # Entities & Repository Interfaces
+│   │   ├── application/        # Use Cases & Ports
+│   │   ├── interface-adapters/ # Controllers, DTOs, Presenters
+│   │   ├── infrastructure/     # TypeORM, Passport, Modules, Seeding
+│   │   └── shared/             # Shared Types & Constants
+│   └── test/                   # E2E Tests
 ├── frontend/                   # React Frontend
 │   └── src/
-│       ├── pages/              # Login, Library, GameDetail, Diary, Admin, Profil, Settings
+│       ├── pages/              # Login, Library, GameDetail, Diary, Admin, Profile, Settings
 │       ├── components/         # Layout (Sidebar, etc.)
 │       ├── contexts/           # AuthContext
 │       ├── hooks/              # Custom Hooks
-│       ├── api/                # API-Client & Endpunkt-Module
+│       ├── api/                # API Client & Endpoint Modules
 │       └── types/              # TypeScript Interfaces
 ├── Dockerfile                  # Multi-Stage Docker Build
-├── nginx.conf                  # Reverse Proxy Konfiguration
-├── supervisord.conf            # Prozess-Manager (nginx + NestJS)
+├── nginx.conf                  # Reverse Proxy Configuration
+├── supervisord.conf            # Process Manager (nginx + NestJS)
 └── .github/workflows/ci.yml   # CI/CD Pipeline
 ```
 
-## Voraussetzungen
+## Prerequisites
 
 - **Node.js** >= 22
 - **npm** >= 10
-- Einen **Steam Web API Key** (kostenlos unter https://steamcommunity.com/dev/apikey)
+- A **Steam Web API Key** (free at https://steamcommunity.com/dev/apikey)
 
-## Lokale Entwicklung
+## Local Development
 
-### 1. Repository klonen & Dependencies installieren
+### 1. Clone the repository & install dependencies
 
 ```bash
 git clone <repository-url>
@@ -94,117 +94,117 @@ cd gaming-library
 npm install
 ```
 
-### 2. Backend starten
+### 2. Start the backend
 
 ```bash
 npm run start:dev -w backend
 ```
 
-Das Backend startet auf **http://localhost:3001** und erstellt automatisch:
-- Eine SQLite-Datenbank unter `backend/data/gaming_library.db`
-- Einen Standard-Admin-Account: **Benutzer:** `admin` / **Passwort:** `admin`
+The backend starts on **http://localhost:3001** and automatically creates:
+- A SQLite database at `backend/data/gaming_library.db`
+- A default admin account: **Username:** `admin` / **Password:** `admin`
 
-### 3. Frontend starten
+### 3. Start the frontend
 
 ```bash
 npm run dev -w frontend
 ```
 
-Das Frontend startet auf **http://localhost:5173** und leitet API-Anfragen automatisch an das Backend (Port 3001) weiter.
+The frontend starts on **http://localhost:5173** and automatically proxies API requests to the backend (port 3001).
 
-### 4. Einloggen & Einrichten
+### 4. Log in & set up
 
-1. Öffne http://localhost:5173
-2. Login mit `admin` / `admin`
-3. Du wirst aufgefordert, das Passwort zu ändern
-4. Unter **Einstellungen** den Steam API Key eintragen
-5. Unter **Profil** deine Steam ID hinterlegen
-6. Über den **Sync**-Button in der Sidebar deine Spielesammlung importieren
+1. Open http://localhost:5173
+2. Log in with `admin` / `admin`
+3. You will be prompted to change your password
+4. Under **Settings**, enter your Steam API key
+5. Under **Profile**, set your Steam ID
+6. Use the **Sync** button in the sidebar to import your game library
 
-## Umgebungsvariablen
+## Environment Variables
 
-| Variable | Standard | Beschreibung |
+| Variable | Default | Description |
 |---|---|---|
-| `PORT` | `3001` | Port für das NestJS Backend |
-| `DB_PATH` | `./data/gaming_library.db` | Pfad zur SQLite-Datenbank |
-| `JWT_SECRET` | `gaming-library-secret-dev-key` | Secret für JWT-Token-Signierung (in Produktion ändern!) |
+| `PORT` | `3001` | Port for the NestJS backend |
+| `DB_PATH` | `./data/gaming_library.db` | Path to the SQLite database |
+| `JWT_SECRET` | `gaming-library-secret-dev-key` | Secret for JWT token signing (change in production!) |
 
 ## Scripts
 
 ### Backend (`npm run ... -w backend`)
 
-| Script | Beschreibung |
+| Script | Description |
 |---|---|
-| `start:dev` | Startet Backend im Watch-Modus |
-| `build` | Kompiliert TypeScript |
-| `test` | Unit-Tests ausführen |
-| `test:e2e` | E2E-Tests ausführen (`DB_PATH=":memory:"` empfohlen) |
-| `lint:ci` | Lint ohne Auto-Fix |
+| `start:dev` | Start backend in watch mode |
+| `build` | Compile TypeScript |
+| `test` | Run unit tests |
+| `test:e2e` | Run E2E tests (`DB_PATH=":memory:"` recommended) |
+| `lint:ci` | Lint without auto-fix |
 
 ### Frontend (`npm run ... -w frontend`)
 
-| Script | Beschreibung |
+| Script | Description |
 |---|---|
-| `dev` | Startet Vite Dev-Server mit HMR |
-| `build` | Kompiliert TypeScript & baut Produktions-Bundle |
-| `test` | Unit-Tests ausführen |
-| `lint` | ESLint ausführen |
+| `dev` | Start Vite dev server with HMR |
+| `build` | Compile TypeScript & build production bundle |
+| `test` | Run unit tests |
+| `lint` | Run ESLint |
 
 ## Docker
 
-### Image bauen
+### Build the image
 
 ```bash
 docker build -t gaming-library .
 ```
 
-### Container starten
+### Run the container
 
 ```bash
 docker run -d \
   -p 80:80 \
   -v gaming-library-data:/app/data \
-  -e JWT_SECRET=dein-sicheres-secret \
+  -e JWT_SECRET=your-secure-secret \
   gaming-library
 ```
 
-Die Anwendung ist dann unter **http://localhost** erreichbar.
+The application will be available at **http://localhost**.
 
-Das Docker-Image enthält:
-- **nginx** als Reverse Proxy (Frontend-Auslieferung + API-Proxy)
-- **NestJS** Backend (via supervisord verwaltet)
-- **SQLite** Datenbank (persistiert im Volume `/app/data`)
+The Docker image includes:
+- **nginx** as a reverse proxy (serves frontend + proxies API requests)
+- **NestJS** backend (managed via supervisord)
+- **SQLite** database (persisted in the `/app/data` volume)
 
-## API-Endpunkte
+## API Endpoints
 
-Alle Endpunkte (außer Login) erfordern einen JWT-Token im `Authorization: Bearer <token>` Header.
+All endpoints (except login) require a JWT token in the `Authorization: Bearer <token>` header.
 
-| Methode | Pfad | Beschreibung | Zugriff |
+| Method | Path | Description | Access |
 |---|---|---|---|
-| `POST` | `/api/auth/login` | Login (Username + Passwort) | Alle |
-| `GET` | `/api/auth/me` | Aktueller Benutzer | Authentifiziert |
-| `POST` | `/api/auth/change-password` | Passwort ändern | Authentifiziert |
-| `GET` | `/api/games` | Alle Spiele des Nutzers | Authentifiziert |
-| `GET` | `/api/games/:id` | Spiel-Details | Authentifiziert |
-| `GET` | `/api/diary` | Tagebucheinträge | Authentifiziert |
-| `POST` | `/api/diary` | Tagebucheintrag erstellen | Authentifiziert |
-| `PUT` | `/api/diary/:id` | Tagebucheintrag bearbeiten | Authentifiziert |
-| `DELETE` | `/api/diary/:id` | Tagebucheintrag löschen | Authentifiziert |
-| `GET` | `/api/games/:gameId/notes` | Notizen für ein Spiel | Authentifiziert |
-| `POST` | `/api/games/:gameId/notes` | Notiz erstellen | Authentifiziert |
-| `PUT` | `/api/notes/:id` | Notiz bearbeiten | Authentifiziert |
-| `DELETE` | `/api/notes/:id` | Notiz löschen | Authentifiziert |
-| `POST` | `/api/sync/steam` | Steam-Sync für eigenen Account | Authentifiziert |
-| `GET` | `/api/settings` | Einstellungen abrufen | Authentifiziert |
-| `PUT` | `/api/settings` | Einstellungen ändern | Admin |
-| `GET` | `/api/profile` | Eigenes Profil | Authentifiziert |
-| `PUT` | `/api/profile` | Profil bearbeiten | Authentifiziert |
-| `GET` | `/api/admin/users` | Alle Benutzer | Admin |
-| `POST` | `/api/admin/users` | Benutzer anlegen | Admin |
-| `PUT` | `/api/admin/users/:id` | Benutzer bearbeiten | Admin |
-| `DELETE` | `/api/admin/users/:id` | Benutzer löschen | Admin |
-| `POST` | `/api/admin/sync-all` | Sync für alle Benutzer | Admin |
+| `POST` | `/api/auth/login` | Login (username + password) | Public |
+| `GET` | `/api/auth/me` | Current user | Authenticated |
+| `POST` | `/api/auth/change-password` | Change password | Authenticated |
+| `GET` | `/api/games` | All games for the user | Authenticated |
+| `GET` | `/api/games/:id` | Game details | Authenticated |
+| `GET` | `/api/diary` | Diary entries | Authenticated |
+| `POST` | `/api/diary` | Create diary entry | Authenticated |
+| `PUT` | `/api/diary/:id` | Update diary entry | Authenticated |
+| `DELETE` | `/api/diary/:id` | Delete diary entry | Authenticated |
+| `GET` | `/api/games/:gameId/notes` | Notes for a game | Authenticated |
+| `POST` | `/api/games/:gameId/notes` | Create note | Authenticated |
+| `PUT` | `/api/notes/:id` | Update note | Authenticated |
+| `DELETE` | `/api/notes/:id` | Delete note | Authenticated |
+| `POST` | `/api/sync/steam` | Steam sync for own account | Authenticated |
+| `GET` | `/api/settings` | Get settings | Authenticated |
+| `PUT` | `/api/settings` | Update settings | Admin |
+| `GET` | `/api/profile` | Own profile | Authenticated |
+| `PUT` | `/api/profile` | Update profile | Authenticated |
+| `GET` | `/api/admin/users` | All users | Admin |
+| `POST` | `/api/admin/users` | Create user | Admin |
+| `PUT` | `/api/admin/users/:id` | Update user | Admin |
+| `DELETE` | `/api/admin/users/:id` | Delete user | Admin |
+| `POST` | `/api/admin/sync-all` | Sync for all users | Admin |
 
-## Lizenz
+## License
 
-Dieses Projekt ist unlizenziert (privat).
+This project is unlicensed (private).
