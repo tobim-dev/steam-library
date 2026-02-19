@@ -4,10 +4,14 @@ import { NoteRepository } from '../../../domain/repositories/note.repository';
 export class UpdateNoteUseCase {
   constructor(private readonly noteRepository: NoteRepository) {}
 
-  async execute(id: string, content: string): Promise<Note> {
+  async execute(userId: string, id: string, content: string): Promise<Note> {
     const existing = await this.noteRepository.findById(id);
     if (!existing) {
       throw new Error(`Note with id ${id} not found`);
+    }
+
+    if (existing.userId !== userId) {
+      throw new Error('Keine Berechtigung');
     }
 
     const updated = new Note(
@@ -16,6 +20,7 @@ export class UpdateNoteUseCase {
       content,
       existing.createdAt,
       new Date(),
+      existing.userId,
     );
     return this.noteRepository.save(updated);
   }

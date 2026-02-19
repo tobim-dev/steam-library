@@ -13,6 +13,7 @@ export class DiaryEntryMapper {
       orm.rating,
       orm.createdAt,
       orm.updatedAt,
+      orm.userId,
     );
   }
 
@@ -27,6 +28,7 @@ export class DiaryEntryMapper {
     orm.rating = domain.rating;
     orm.createdAt = domain.createdAt;
     orm.updatedAt = domain.updatedAt;
+    orm.userId = domain.userId;
     return orm;
   }
 }

@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { GameOrmEntity } from './game.orm-entity';
+import { UserOrmEntity } from './user.orm-entity';
 
 @Entity('notes')
 export class NoteOrmEntity {
@@ -29,4 +30,11 @@ export class NoteOrmEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ type: 'varchar' })
+  userId: string;
+
+  @ManyToOne(() => UserOrmEntity, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'userId' })
+  user: UserOrmEntity;
 }

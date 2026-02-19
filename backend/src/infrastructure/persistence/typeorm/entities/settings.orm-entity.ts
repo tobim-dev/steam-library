@@ -8,9 +8,6 @@ export class SettingsOrmEntity {
   @Column({ type: 'varchar', nullable: true })
   steamApiKey: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
-  steamId: string | null;
-
   @Column({ type: 'datetime', nullable: true })
   lastSyncAt: Date | null;
 

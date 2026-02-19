@@ -1,10 +1,39 @@
 const BASE_URL = '/api';
 
+let authToken: string | null = localStorage.getItem('auth_token');
+
+export function setAuthToken(token: string | null) {
+  authToken = token;
+  if (token) {
+    localStorage.setItem('auth_token', token);
+  } else {
+    localStorage.removeItem('auth_token');
+  }
+}
+
+export function getAuthToken(): string | null {
+  return authToken;
+}
+
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+
+  if (authToken) {
+    headers['Authorization'] = `Bearer ${authToken}`;
+  }
+
   const response = await fetch(`${BASE_URL}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     ...options,
   });
+
+  if (response.status === 401) {
+    setAuthToken(null);
+    window.location.href = '/login';
+    throw new Error('Sitzung abgelaufen');
+  }
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));

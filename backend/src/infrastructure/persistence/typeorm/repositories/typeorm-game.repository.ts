@@ -13,15 +13,20 @@ export class TypeOrmGameRepository implements GameRepository {
     private readonly ormRepo: Repository<GameOrmEntity>,
   ) {}
 
-  async findAll(options?: {
-    search?: string;
-    sort?: string;
-    order?: 'asc' | 'desc';
-  }): Promise<Game[]> {
+  async findAll(
+    userId: string,
+    options?: {
+      search?: string;
+      sort?: string;
+      order?: 'asc' | 'desc';
+    },
+  ): Promise<Game[]> {
     const qb = this.ormRepo.createQueryBuilder('game');
 
+    qb.where('game.userId = :userId', { userId });
+
     if (options?.search) {
-      qb.where('game.name LIKE :search', {
+      qb.andWhere('game.name LIKE :search', {
         search: `%${options.search}%`,
       });
     }
@@ -39,8 +44,11 @@ export class TypeOrmGameRepository implements GameRepository {
     return entity ? GameMapper.toDomain(entity) : null;
   }
 
-  async findBySteamAppId(steamAppId: number): Promise<Game | null> {
-    const entity = await this.ormRepo.findOneBy({ steamAppId });
+  async findBySteamAppId(
+    steamAppId: number,
+    userId: string,
+  ): Promise<Game | null> {
+    const entity = await this.ormRepo.findOneBy({ steamAppId, userId });
     return entity ? GameMapper.toDomain(entity) : null;
   }
 
@@ -56,7 +64,10 @@ export class TypeOrmGameRepository implements GameRepository {
     return saved.map((s) => GameMapper.toDomain(s));
   }
 
-  async count(): Promise<number> {
+  async count(userId?: string): Promise<number> {
+    if (userId) {
+      return this.ormRepo.count({ where: { userId } });
+    }
     return this.ormRepo.count();
   }
 

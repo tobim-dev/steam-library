@@ -11,6 +11,7 @@ export class Game {
     public readonly lastSyncedAt: Date,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
+    public readonly userId: string,
   ) {}
 
   get playtimeFormatted(): string {

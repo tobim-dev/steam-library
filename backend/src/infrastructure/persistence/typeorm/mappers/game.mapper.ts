@@ -15,6 +15,7 @@ export class GameMapper {
       orm.lastSyncedAt,
       orm.createdAt,
       orm.updatedAt,
+      orm.userId,
     );
   }
 
@@ -31,6 +32,7 @@ export class GameMapper {
     orm.lastSyncedAt = domain.lastSyncedAt;
     orm.createdAt = domain.createdAt;
     orm.updatedAt = domain.updatedAt;
+    orm.userId = domain.userId;
     return orm;
   }
 }

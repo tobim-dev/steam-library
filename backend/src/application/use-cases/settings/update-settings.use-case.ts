@@ -3,7 +3,6 @@ import { SettingsRepository } from '../../../domain/repositories/settings.reposi
 
 export interface UpdateSettingsInput {
   steamApiKey?: string;
-  steamId?: string;
 }
 
 export class UpdateSettingsUseCase {
@@ -17,7 +16,6 @@ export class UpdateSettingsUseCase {
       input.steamApiKey !== undefined
         ? input.steamApiKey
         : existing.steamApiKey,
-      input.steamId !== undefined ? input.steamId : existing.steamId,
       existing.lastSyncAt,
       existing.lastSyncGameCount,
     );

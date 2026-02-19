@@ -5,5 +5,6 @@ export class Note {
     public readonly content: string,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
+    public readonly userId: string,
   ) {}
 }

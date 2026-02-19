@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useEffect, useCallback } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 import styles from './Sidebar.module.css';
 
 interface SidebarProps {
@@ -9,19 +10,18 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation();
+  const { user, isAdmin, logout } = useAuth();
 
   const handleClose = useCallback(() => {
     onClose();
   }, [onClose]);
 
-  // Sidebar automatisch schliessen bei Routenwechsel (mobile)
   useEffect(() => {
     handleClose();
   }, [location.pathname, handleClose]);
 
   return (
     <>
-      {/* Dunkler Overlay-Hintergrund auf Mobile */}
       {isOpen && <div className={styles.overlay} onClick={onClose} />}
 
       <aside
@@ -54,15 +54,47 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           </NavLink>
 
           <NavLink
-            to="/settings"
+            to="/profile"
             className={({ isActive }) =>
               `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
             }
           >
-            <span className={styles.navIcon}>&#9881;</span>
-            Einstellungen
+            <span className={styles.navIcon}>&#128100;</span>
+            Profil
           </NavLink>
+
+          {isAdmin && (
+            <>
+              <div className={styles.divider} />
+              <NavLink
+                to="/settings"
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
+                }
+              >
+                <span className={styles.navIcon}>&#9881;</span>
+                Einstellungen
+              </NavLink>
+
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
+                }
+              >
+                <span className={styles.navIcon}>&#128101;</span>
+                Verwaltung
+              </NavLink>
+            </>
+          )}
         </nav>
+
+        <div className={styles.userSection}>
+          <div className={styles.userName}>{user?.displayName}</div>
+          <button className={styles.logoutBtn} onClick={logout}>
+            Abmelden
+          </button>
+        </div>
       </aside>
     </>
   );

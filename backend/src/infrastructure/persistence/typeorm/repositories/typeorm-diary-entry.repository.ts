@@ -13,15 +13,20 @@ export class TypeOrmDiaryEntryRepository implements DiaryEntryRepository {
     private readonly ormRepo: Repository<DiaryEntryOrmEntity>,
   ) {}
 
-  async findAll(options?: {
-    gameId?: string;
-    sort?: string;
-    order?: 'asc' | 'desc';
-  }): Promise<DiaryEntry[]> {
+  async findAll(
+    userId: string,
+    options?: {
+      gameId?: string;
+      sort?: string;
+      order?: 'asc' | 'desc';
+    },
+  ): Promise<DiaryEntry[]> {
     const qb = this.ormRepo.createQueryBuilder('entry');
 
+    qb.where('entry.userId = :userId', { userId });
+
     if (options?.gameId) {
-      qb.where('entry.gameId = :gameId', { gameId: options.gameId });
+      qb.andWhere('entry.gameId = :gameId', { gameId: options.gameId });
     }
 
     const sortField = this.getSortField(options?.sort);
@@ -32,9 +37,9 @@ export class TypeOrmDiaryEntryRepository implements DiaryEntryRepository {
     return entities.map((e) => DiaryEntryMapper.toDomain(e));
   }
 
-  async findByGameId(gameId: string): Promise<DiaryEntry[]> {
+  async findByGameId(gameId: string, userId: string): Promise<DiaryEntry[]> {
     const entities = await this.ormRepo.find({
-      where: { gameId },
+      where: { gameId, userId },
       order: { playDate: 'DESC' },
     });
     return entities.map((e) => DiaryEntryMapper.toDomain(e));

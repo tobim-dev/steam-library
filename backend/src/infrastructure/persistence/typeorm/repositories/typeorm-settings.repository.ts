@@ -23,7 +23,6 @@ export class TypeOrmSettingsRepository implements SettingsRepository {
       entity = new SettingsOrmEntity();
       entity.id = DEFAULT_SETTINGS_ID;
       entity.steamApiKey = null;
-      entity.steamId = null;
       entity.lastSyncAt = null;
       entity.lastSyncGameCount = null;
       entity = await this.ormRepo.save(entity);

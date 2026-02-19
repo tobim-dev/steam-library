@@ -4,7 +4,7 @@ import { DiaryEntryRepository } from '../../../domain/repositories/diary-entry.r
 export class GetDiaryEntriesForGameUseCase {
   constructor(private readonly diaryEntryRepository: DiaryEntryRepository) {}
 
-  async execute(gameId: string): Promise<DiaryEntry[]> {
-    return this.diaryEntryRepository.findByGameId(gameId);
+  async execute(userId: string, gameId: string): Promise<DiaryEntry[]> {
+    return this.diaryEntryRepository.findByGameId(gameId, userId);
   }
 }

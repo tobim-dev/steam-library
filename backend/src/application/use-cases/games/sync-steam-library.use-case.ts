@@ -2,6 +2,7 @@ import { Game } from '../../../domain/entities/game.entity';
 import { GameRepository } from '../../../domain/repositories/game.repository';
 import { SettingsRepository } from '../../../domain/repositories/settings.repository';
 import { Settings } from '../../../domain/entities/settings.entity';
+import { UserRepository } from '../../../domain/repositories/user.repository';
 import { SteamApiPort } from '../../ports/steam-api.port';
 import { randomUUID } from 'crypto';
 
@@ -15,20 +16,28 @@ export class SyncSteamLibraryUseCase {
   constructor(
     private readonly gameRepository: GameRepository,
     private readonly settingsRepository: SettingsRepository,
+    private readonly userRepository: UserRepository,
     private readonly steamApi: SteamApiPort,
   ) {}
 
-  async execute(): Promise<SyncResult> {
+  async execute(userId: string): Promise<SyncResult> {
     const settings = await this.settingsRepository.get();
-    if (!settings.isConfigured()) {
+    if (!settings.isApiKeyConfigured()) {
       throw new Error(
-        'Steam API is not configured. Please set your API Key and Steam ID in Settings.',
+        'Steam API is not configured. Please set your API Key in Settings.',
+      );
+    }
+
+    const user = await this.userRepository.findById(userId);
+    if (!user || !user.isConfiguredForSync) {
+      throw new Error(
+        'Steam ID is not configured. Please set your Steam ID in your profile.',
       );
     }
 
     const steamGames = await this.steamApi.getOwnedGames(
       settings.steamApiKey!,
-      settings.steamId!,
+      user.steamId!,
     );
 
     let added = 0;
@@ -38,6 +47,7 @@ export class SyncSteamLibraryUseCase {
     for (const steamGame of steamGames) {
       const existing = await this.gameRepository.findBySteamAppId(
         steamGame.appid,
+        userId,
       );
 
       const headerImageUrl = `https://steamcdn-a.akamaihd.net/steam/apps/${steamGame.appid}/header.jpg`;
@@ -59,6 +69,7 @@ export class SyncSteamLibraryUseCase {
           now,
           existing.createdAt,
           now,
+          userId,
         );
         await this.gameRepository.save(updatedGame);
         updated++;
@@ -75,6 +86,7 @@ export class SyncSteamLibraryUseCase {
           now,
           now,
           now,
+          userId,
         );
         await this.gameRepository.save(newGame);
         added++;
@@ -85,7 +97,6 @@ export class SyncSteamLibraryUseCase {
     const updatedSettings = new Settings(
       settings.id,
       settings.steamApiKey,
-      settings.steamId,
       now,
       steamGames.length,
     );

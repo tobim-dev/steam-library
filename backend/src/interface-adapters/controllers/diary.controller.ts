@@ -7,8 +7,11 @@ import {
   Param,
   Query,
   Body,
+  Request,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../../infrastructure/auth/guards/jwt-auth.guard';
 import { CreateDiaryEntryUseCase } from '../../application/use-cases/diary/create-diary-entry.use-case';
 import { UpdateDiaryEntryUseCase } from '../../application/use-cases/diary/update-diary-entry.use-case';
 import { DeleteDiaryEntryUseCase } from '../../application/use-cases/diary/delete-diary-entry.use-case';
@@ -17,8 +20,10 @@ import { GetDiaryEntriesForGameUseCase } from '../../application/use-cases/diary
 import { CreateDiaryEntryDto } from '../dto/create-diary-entry.dto';
 import { UpdateDiaryEntryDto } from '../dto/update-diary-entry.dto';
 import { DiaryEntryPresenter } from '../presenters/diary-entry.presenter';
+import type { AuthenticatedRequest } from '../../shared/authenticated-request';
 
 @Controller('api')
+@UseGuards(JwtAuthGuard)
 export class DiaryController {
   constructor(
     private readonly createDiaryEntry: CreateDiaryEntryUseCase,
@@ -30,11 +35,12 @@ export class DiaryController {
 
   @Get('diary')
   async findAll(
+    @Request() req: AuthenticatedRequest,
     @Query('gameId') gameId?: string,
     @Query('sort') sort?: string,
     @Query('order') order?: 'asc' | 'desc',
   ) {
-    const entries = await this.getDiaryEntries.execute({
+    const entries = await this.getDiaryEntries.execute(req.user.id, {
       gameId,
       sort,
       order,
@@ -43,15 +49,24 @@ export class DiaryController {
   }
 
   @Get('games/:gameId/diary')
-  async findByGame(@Param('gameId') gameId: string) {
-    const entries = await this.getDiaryEntriesForGame.execute(gameId);
+  async findByGame(
+    @Request() req: AuthenticatedRequest,
+    @Param('gameId') gameId: string,
+  ) {
+    const entries = await this.getDiaryEntriesForGame.execute(
+      req.user.id,
+      gameId,
+    );
     return entries.map((e) => DiaryEntryPresenter.toResponse(e));
   }
 
   @Post('diary')
-  async create(@Body() dto: CreateDiaryEntryDto) {
+  async create(
+    @Request() req: AuthenticatedRequest,
+    @Body() dto: CreateDiaryEntryDto,
+  ) {
     try {
-      const entry = await this.createDiaryEntry.execute({
+      const entry = await this.createDiaryEntry.execute(req.user.id, {
         gameId: dto.gameId,
         title: dto.title,
         content: dto.content,
@@ -68,9 +83,13 @@ export class DiaryController {
   }
 
   @Put('diary/:id')
-  async update(@Param('id') id: string, @Body() dto: UpdateDiaryEntryDto) {
+  async update(
+    @Request() req: AuthenticatedRequest,
+    @Param('id') id: string,
+    @Body() dto: UpdateDiaryEntryDto,
+  ) {
     try {
-      const entry = await this.updateDiaryEntry.execute(id, {
+      const entry = await this.updateDiaryEntry.execute(req.user.id, id, {
         title: dto.title,
         content: dto.content,
         playDate: dto.playDate ? new Date(dto.playDate) : undefined,
@@ -84,9 +103,9 @@ export class DiaryController {
   }
 
   @Delete('diary/:id')
-  async remove(@Param('id') id: string) {
+  async remove(@Request() req: AuthenticatedRequest, @Param('id') id: string) {
     try {
-      await this.deleteDiaryEntry.execute(id);
+      await this.deleteDiaryEntry.execute(req.user.id, id);
       return { success: true };
     } catch {
       throw new NotFoundException(`Diary entry with id ${id} not found`);

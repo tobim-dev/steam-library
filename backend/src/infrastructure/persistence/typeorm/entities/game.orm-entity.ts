@@ -4,14 +4,19 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  Unique,
 } from 'typeorm';
+import { UserOrmEntity } from './user.orm-entity';
 
 @Entity('games')
+@Unique(['steamAppId', 'userId'])
 export class GameOrmEntity {
   @PrimaryColumn('varchar')
   id: string;
 
-  @Column({ type: 'integer', unique: true })
+  @Column({ type: 'integer' })
   steamAppId: number;
 
   @Column({ type: 'varchar' })
@@ -40,4 +45,11 @@ export class GameOrmEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ type: 'varchar' })
+  userId: string;
+
+  @ManyToOne(() => UserOrmEntity, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'userId' })
+  user: UserOrmEntity;
 }

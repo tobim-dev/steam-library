@@ -18,7 +18,10 @@ export class CreateDiaryEntryUseCase {
     private readonly gameRepository: GameRepository,
   ) {}
 
-  async execute(input: CreateDiaryEntryInput): Promise<DiaryEntry> {
+  async execute(
+    userId: string,
+    input: CreateDiaryEntryInput,
+  ): Promise<DiaryEntry> {
     if (input.gameId) {
       const game = await this.gameRepository.findById(input.gameId);
       if (!game) {
@@ -43,6 +46,7 @@ export class CreateDiaryEntryUseCase {
       input.rating ?? null,
       now,
       now,
+      userId,
     );
     return this.diaryEntryRepository.save(entry);
   }

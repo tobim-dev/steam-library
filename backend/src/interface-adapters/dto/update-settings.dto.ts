@@ -4,8 +4,4 @@ export class UpdateSettingsDto {
   @IsOptional()
   @IsString()
   steamApiKey?: string;
-
-  @IsOptional()
-  @IsString()
-  steamId?: string;
 }

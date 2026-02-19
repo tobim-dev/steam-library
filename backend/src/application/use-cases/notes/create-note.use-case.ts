@@ -9,14 +9,18 @@ export class CreateNoteUseCase {
     private readonly gameRepository: GameRepository,
   ) {}
 
-  async execute(gameId: string, content: string): Promise<Note> {
+  async execute(
+    userId: string,
+    gameId: string,
+    content: string,
+  ): Promise<Note> {
     const game = await this.gameRepository.findById(gameId);
     if (!game) {
       throw new Error(`Game with id ${gameId} not found`);
     }
 
     const now = new Date();
-    const note = new Note(randomUUID(), gameId, content, now, now);
+    const note = new Note(randomUUID(), gameId, content, now, now, userId);
     return this.noteRepository.save(note);
   }
 }

@@ -6,7 +6,6 @@ export class SettingsMapper {
     return new Settings(
       orm.id,
       orm.steamApiKey,
-      orm.steamId,
       orm.lastSyncAt,
       orm.lastSyncGameCount,
     );
@@ -16,7 +15,6 @@ export class SettingsMapper {
     const orm = new SettingsOrmEntity();
     orm.id = domain.id;
     orm.steamApiKey = domain.steamApiKey;
-    orm.steamId = domain.steamId;
     orm.lastSyncAt = domain.lastSyncAt;
     orm.lastSyncGameCount = domain.lastSyncGameCount;
     return orm;

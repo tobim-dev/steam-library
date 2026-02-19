@@ -9,6 +9,7 @@ export class DiaryEntry {
     public readonly rating: number | null,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
+    public readonly userId: string,
   ) {}
 
   get isRated(): boolean {

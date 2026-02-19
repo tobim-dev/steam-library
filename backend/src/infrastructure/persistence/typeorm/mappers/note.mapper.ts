@@ -9,6 +9,7 @@ export class NoteMapper {
       orm.content,
       orm.createdAt,
       orm.updatedAt,
+      orm.userId,
     );
   }
 
@@ -19,6 +20,7 @@ export class NoteMapper {
     orm.content = domain.content;
     orm.createdAt = domain.createdAt;
     orm.updatedAt = domain.updatedAt;
+    orm.userId = domain.userId;
     return orm;
   }
 }

@@ -6,8 +6,11 @@ import {
   Delete,
   Param,
   Body,
+  Request,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../../infrastructure/auth/guards/jwt-auth.guard';
 import { CreateNoteUseCase } from '../../application/use-cases/notes/create-note.use-case';
 import { UpdateNoteUseCase } from '../../application/use-cases/notes/update-note.use-case';
 import { DeleteNoteUseCase } from '../../application/use-cases/notes/delete-note.use-case';
@@ -15,8 +18,10 @@ import { GetNotesForGameUseCase } from '../../application/use-cases/notes/get-no
 import { CreateNoteDto } from '../dto/create-note.dto';
 import { UpdateNoteDto } from '../dto/update-note.dto';
 import { NotePresenter } from '../presenters/note.presenter';
+import type { AuthenticatedRequest } from '../../shared/authenticated-request';
 
 @Controller('api')
+@UseGuards(JwtAuthGuard)
 export class NotesController {
   constructor(
     private readonly createNote: CreateNoteUseCase,
@@ -26,15 +31,26 @@ export class NotesController {
   ) {}
 
   @Get('games/:gameId/notes')
-  async findByGame(@Param('gameId') gameId: string) {
-    const notes = await this.getNotesForGame.execute(gameId);
+  async findByGame(
+    @Request() req: AuthenticatedRequest,
+    @Param('gameId') gameId: string,
+  ) {
+    const notes = await this.getNotesForGame.execute(req.user.id, gameId);
     return notes.map((n) => NotePresenter.toResponse(n));
   }
 
   @Post('games/:gameId/notes')
-  async create(@Param('gameId') gameId: string, @Body() dto: CreateNoteDto) {
+  async create(
+    @Request() req: AuthenticatedRequest,
+    @Param('gameId') gameId: string,
+    @Body() dto: CreateNoteDto,
+  ) {
     try {
-      const note = await this.createNote.execute(gameId, dto.content);
+      const note = await this.createNote.execute(
+        req.user.id,
+        gameId,
+        dto.content,
+      );
       return NotePresenter.toResponse(note);
     } catch {
       throw new NotFoundException(`Game with id ${gameId} not found`);
@@ -42,9 +58,13 @@ export class NotesController {
   }
 
   @Put('notes/:id')
-  async update(@Param('id') id: string, @Body() dto: UpdateNoteDto) {
+  async update(
+    @Request() req: AuthenticatedRequest,
+    @Param('id') id: string,
+    @Body() dto: UpdateNoteDto,
+  ) {
     try {
-      const note = await this.updateNote.execute(id, dto.content);
+      const note = await this.updateNote.execute(req.user.id, id, dto.content);
       return NotePresenter.toResponse(note);
     } catch {
       throw new NotFoundException(`Note with id ${id} not found`);
@@ -52,9 +72,9 @@ export class NotesController {
   }
 
   @Delete('notes/:id')
-  async remove(@Param('id') id: string) {
+  async remove(@Request() req: AuthenticatedRequest, @Param('id') id: string) {
     try {
-      await this.deleteNote.execute(id);
+      await this.deleteNote.execute(req.user.id, id);
       return { success: true };
     } catch {
       throw new NotFoundException(`Note with id ${id} not found`);

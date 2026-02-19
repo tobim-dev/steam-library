@@ -28,7 +28,6 @@ export function useSettings() {
 
   const updateSettings = async (data: {
     steamApiKey?: string;
-    steamId?: string;
   }) => {
     const updated = await settingsApi.update(data);
     setSettings(updated);

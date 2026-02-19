@@ -13,9 +13,9 @@ export class TypeOrmNoteRepository implements NoteRepository {
     private readonly ormRepo: Repository<NoteOrmEntity>,
   ) {}
 
-  async findByGameId(gameId: string): Promise<Note[]> {
+  async findByGameId(gameId: string, userId: string): Promise<Note[]> {
     const entities = await this.ormRepo.find({
-      where: { gameId },
+      where: { gameId, userId },
       order: { createdAt: 'DESC' },
     });
     return entities.map((e) => NoteMapper.toDomain(e));
